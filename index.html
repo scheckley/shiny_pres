@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Enzyme App Pitch</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Enzyme App Pitch">
+  <meta name="author" content="Steve Checkley">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>Enzyme App Pitch</h1>
+    <h2>Coursera data products</h2>
+    <p>Steve Checkley<br/>computational biologist</p>
+  </hgroup>
+  <article></article>  
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Introduction</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Enzymes are biological molecules that catalyze (increase the rates of) chemical reactions. [1]</p>
+
+<p>Enzymes are studied by biologists all over the world for applications in:</p>
+
+<ul>
+<li>Understanding metabolism.</li>
+<li>Finding new drug targets (e.g cancer).</li>
+<li>Biotechnology application (e.g cleaning, drug discovery, biofuels).</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>I&#39;m a Dr, not a computer scientist</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Michaelis and Menten established a set of mathematical equations in 1913 to calculate the reaction rates of enzyme catalysed reactions [2]. </p>
+
+<p>Biologists can make these calculations manually in order to understand the performance of enzymes in response to changes to their attributes:</p>
+
+<p>$$\frac{dS}{dt} = -\text{k1}_f \cdot S \cdot E + \text{k1}_r \cdot ES$$</p>
+
+<p>$$\frac{dE}{dt} = -\text{k1}_f \cdot S \cdot E + (\text{k1}_r + \text{k2}) \cdot ES$$</p>
+
+<p>$$\frac{dES}{dt} = \text{k1}_f \cdot S \cdot E - \text{k1}_r + k2) \cdot ES$$</p>
+
+<p>$$\frac{dP}{dt} = \text{k2} \cdot ES$$</p>
+
+<p>Biologists don&#39;t want to spend their time with calculus and computers are much faster at it than humans.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="smallcode" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>There&#39;s an App for that!</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>I have created an app that calculates enzyme kinetics using state of the art solvers from the deSolve package[2], enabling life scientists to modify all of the appropriate enzyme properties and immediately visualize the reaction performance. Here&#39;s an example:</p>
+
+<p><div class="columns-2"></p>
+
+<pre><code class="r">require(deSolve)
+require(ggplot2)
+mm &lt;- function(time,init,parms) {
+  with(as.list(c(init, parms)), {
+    dS &lt;- -k1f * S * E + k1r * ES
+    dE &lt;- -k1f * S * E + (k1r + k2) * ES
+    dES &lt;- k1f * S * E - (k1r + k2) * ES
+    dP &lt;- k2 * ES
+    vmax &lt;- sum(k2 * sum(E + ES))
+    v &lt;- sum((vmax * S) / (km + S))
+
+    return(list(c(dS,dE,dES,dP),v=v))
+  })
+}
+
+parms = c(k1f=1.0, k1r=1.0,k2=1.0,km=1.0)
+init = c(S=1000, E=10, ES=0, P=0)
+exp.time = seq(1,100,1.0)
+
+out &lt;- as.data.frame(ode(y=init, times=exp.time, func = mm, parms=parms))
+
+p1 &lt;- ggplot(data=out, aes(x=S, y=v)) +
+  geom_line() +
+  xlab(&quot;substrate concentration ([S]/t)&quot;) +
+  ylab(&quot;rate of product formation ([P]/t)&quot;) +
+  ggtitle(&quot;Reaction Rate&quot;)
+
+plot(p1)
+</code></pre>
+
+<p><img src="figure/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2><a href="https://stevecheckley.shinyapps.io/shiny_mm">The app is live and available on shiny.io</a></h2>
+  </hgroup>
+  <article data-timings="">
+    <p><img src="screen_cap.png" alt="Caption for the picture.">
+()</p>
+
+<h3>References</h3>
+
+<ul>
+<li>[1] <a href="https://www.boundless.com/microbiology/textbooks/boundless-microbiology-textbook/industrial-microbiology-17/microbial-products-in-the-health-industry-199/enzymes-used-in-industry-1004-5469/">Enzymes used in Industry. Boundless, 21st July 2015</a></li>
+<li>[2] <a href="http://onlinelibrary.wiley.com/doi/10.1111/febs.12598/pdf">Deichmann U. et al (2014). FEBS Journal, 281. 435-463.</a></li>
+<li>[3] <a href="https://cran.r-project.org/web/packages/deSolve/index.html">Soetaert K. et al (2010). Journal of Statistical Software. 33:9, 1-24.</a></li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Introduction'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='I&#39;m a Dr, not a computer scientist'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='There&#39;s an App for that!'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='<a href="https://stevecheckley.shinyapps.io/shiny_mm">The app is live and available on shiny.io</a>'>
+         4
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- MathJax: Fall back to local if CDN offline but local image fonts are not supported (saves >100MB) -->
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [['$','$'], ['\\(','\\)']],
+        processEscapes: true
+      }
+    });
+  </script>
+  <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <!-- <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/2.0-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script> -->
+  <script>window.MathJax || document.write('<script type="text/x-mathjax-config">MathJax.Hub.Config({"HTML-CSS":{imageFont:null}});<\/script><script src="libraries/widgets/mathjax/MathJax.js?config=TeX-AMS-MML_HTMLorMML"><\/script>')
+</script>
+<!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
