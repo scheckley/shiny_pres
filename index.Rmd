@@ -38,7 +38,7 @@ $$\frac{dP}{dt} = \text{k2} \cdot ES$$
 
 Biologists don't want to spend their time with calculus and computers are much faster at it than humans.
 
---- .smallcode
+--- .codefont
 
 ## There's an App for that!
 

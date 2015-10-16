@@ -13,7 +13,8 @@
     media="only screen and (max-device-width: 480px)" >
   <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
   <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
-  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/codefont.css"></link>
+<link rel=stylesheet href="./assets/css/ribbons.css"></link>
 
   
   <!-- Grab CDN jQuery, fall back to local if offline -->
@@ -69,13 +70,13 @@
 
 <p>Biologists can make these calculations manually in order to understand the performance of enzymes in response to changes to their attributes:</p>
 
-<p>$$\frac{dS}{dt} = -\text{k1}_f \cdot S \cdot E + \text{k1}_r \cdot ES$$</p>
+<p>\[\frac{dS}{dt} = -\text{k1}_f \cdot S \cdot E + \text{k1}_r \cdot ES\]</p>
 
-<p>$$\frac{dE}{dt} = -\text{k1}_f \cdot S \cdot E + (\text{k1}_r + \text{k2}) \cdot ES$$</p>
+<p>\[\frac{dE}{dt} = -\text{k1}_f \cdot S \cdot E + (\text{k1}_r + \text{k2}) \cdot ES\]</p>
 
-<p>$$\frac{dES}{dt} = \text{k1}_f \cdot S \cdot E - \text{k1}_r + k2) \cdot ES$$</p>
+<p>\[\frac{dES}{dt} = \text{k1}_f \cdot S \cdot E - \text{k1}_r + k2) \cdot ES\]</p>
 
-<p>$$\frac{dP}{dt} = \text{k2} \cdot ES$$</p>
+<p>\[\frac{dP}{dt} = \text{k2} \cdot ES\]</p>
 
 <p>Biologists don&#39;t want to spend their time with calculus and computers are much faster at it than humans.</p>
 
@@ -83,7 +84,7 @@
   <!-- Presenter Notes -->
 </slide>
 
-<slide class="smallcode" id="slide-3" style="background:;">
+<slide class="codefont" id="slide-3" style="background:;">
   <hgroup>
     <h2>There&#39;s an App for that!</h2>
   </hgroup>
@@ -122,7 +123,7 @@ p1 &lt;- ggplot(data=out, aes(x=S, y=v)) +
 plot(p1)
 </code></pre>
 
-<p><img src="figure/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
+<p><img src="assets/fig/unnamed-chunk-1-1.png" alt="plot of chunk unnamed-chunk-1"> </p>
 
   </article>
   <!-- Presenter Notes -->

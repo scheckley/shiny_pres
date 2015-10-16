@@ -38,7 +38,7 @@ $$\frac{dP}{dt} = \text{k2} \cdot ES$$
 
 Biologists don't want to spend their time with calculus and computers are much faster at it than humans.
 
---- .smallcode
+--- .codefont
 
 ## There's an App for that!
 
@@ -77,7 +77,7 @@ p1 <- ggplot(data=out, aes(x=S, y=v)) +
 plot(p1)
 ```
 
-![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-1-1.png) 
+![plot of chunk unnamed-chunk-1](assets/fig/unnamed-chunk-1-1.png) 
 
 ---
 
