@@ -31,9 +31,6 @@
   left: 60px;
 }
 
-slide.smallcode pre {
-  font-size: 9px;
-}
 /* Styles for Title Slide */
 .title-slide hgroup > h1{
   font-family: 'Oswald', sans-serif;
@@ -367,4 +364,6 @@ pre code {
   color: #535E43 ;  /* ; #EF5150*/
 }
 
-
+slide.smallcode pre {
+  font-size: 9px;
+}

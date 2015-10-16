@@ -1501,3 +1501,7 @@ aside.gdbar img {
     font-family: monospace !important;
   }
 }
+
+slide.smallcode pre {
+  font-size: 9px;
+}
